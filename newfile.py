@@ -42,4 +42,6 @@ try:
             st.link_button("View Job", row['job_url'])
             st.write("---")
 except:
-    st.info("I'm updating the job list right now! Please refresh in 60 seconds.")
+    st.info("I'm updating the job list right now! Please refresh in 60 seconds.")st.divider()
+st.caption("⚠️ Disclaimer: This job board is for informational purposes. While we strive for accuracy, we do not guarantee employment or verify every employer. Use at your own risk.")
+
