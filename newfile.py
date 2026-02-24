@@ -4,8 +4,8 @@ from jobspy import scrape_jobs
 
 # --- PASTE YOUR LINKS HERE ---
 MY_NICHE = "Remote Marketing" 
-MY_SUBSTACK = https://nichejobs1.substack.com/?r=7npwbk&utm_campaign=pub-share-checklist
-MY_STRIPE = https://buy.stripe.com/test_5kQdRa8YgbcN9qvbEn4sE00
+MY_SUBSTACK = "https://nichejobs1.substack.com/?r=7npwbk&utm_campaign=pub-share-checklist"
+MY_STRIPE = "https://buy.stripe.com/test_5kQdRa8YgbcN9qvbEn4sE00"
 
 st.set_page_config(page_title="Job Board", page_icon="🚀")
 
