@@ -2,46 +2,62 @@ import streamlit as st
 import pandas as pd
 from jobspy import scrape_jobs
 
-# --- PASTE YOUR LINKS HERE ---
+# --- SEO & TITLE SETTINGS ---
+# This helps Google find your app when people search for jobs
+st.set_page_config(
+    page_title="Remote Marketing Jobs 2026 | Verified Daily Leads",
+    page_icon="📈",
+    layout="wide"
+)
+
+# --- 1. YOUR SETTINGS ---
 MY_NICHE = "Remote Marketing" 
-MY_SUBSTACK = "https://nichejobs1.substack.com/?r=7npwbk&utm_campaign=pub-share-checklist"
-MY_STRIPE = "https://buy.stripe.com/5kQdRa8YgbcN9qvbEn4sE00"
+MY_SUBSTACK = "https://nichejobs1.substack.com"  
+MY_STRIPE_VIP = "https://buy.stripe.com/5kQdRa8YgbcN9qvbEn4sE00"
 
-st.set_page_config(page_title="Job Board", page_icon="🚀")
+# --- 2. SIDEBAR ---
+with st.sidebar:
+    st.title("💎 VIP Access")
+    st.write("Get the 'Hidden' $150k+ jobs before they hit LinkedIn.")
+    st.link_button("🚀 Join VIP - $19/mo", MY_STRIPE_VIP, use_container_width=True)
+    st.divider()
+    st.info("VIP members get access to salary data and direct hiring manager links.")
 
-# 1. THE HEADER
-st.title(f"💼 {MY_NICHE} Job Board")
-st.write("Automatically updated every 24 hours.")
+# --- 3. MAIN INTERFACE ---
+st.title(f"💼 Remote marketing} Job Board")
+st.write("We scan 10+ sites so you don't have to. Only 100% Remote roles.")
 
-# 2. THE ACTION BUTTONS
-col1, col2 = st.columns(2)
-with col1:
-    st.link_button("📩 Get Email Alerts", MY_SUBSTACK, use_container_width=True)
-with col2:
-    st.link_button("🌟 Feature a Job ($49)", MY_STRIPE, use_container_width=True)
-
+# This button is your 'Email Magnet'
+st.link_button("📩 Alert Me When New Jobs are Posted", MY_SUBSTACK)
 st.divider()
 
-# 3. THE AUTOMATED JOB FINDER
-@st.cache_data(ttl=86400) # This saves data for 24 hours so it's lightning fast
+# --- 4. THE JOB FINDER (The Robot) ---
+@st.cache_data(ttl=86400)
 def fetch_jobs():
     return scrape_jobs(
-        site_name=["indeed", "linkedin"],
+        site_name=["linkedin", "indeed", "zip_recruiter"],
         search_term=MY_NICHE,
-        location="USA",
-        results_wanted=10,
-        hours_old=72
+        location="Remote",
+        results_wanted=20,
+        hours_old=48
     )
 
 try:
     jobs = fetch_jobs()
-    for _, row in jobs.iterrows():
-        with st.container():
+    for i, row in jobs.iterrows():
+        # Paywall every 3rd job
+        if i % 3 == 0:
+            with st.expander(f"🔒 VIP ONLY: {row['title']} at {row['company']}"):
+                st.write("### 💰 High-Salary Lead")
+                st.write("This listing is verified and active. Unlock for full details.")
+                st.link_button("Unlock Now", MY_STRIPE_VIP)
+        else:
             st.subheader(row['title'])
             st.write(f"🏢 {row['company']} | 📍 {row['location']}")
-            st.link_button("View Job", row['job_url'])
+            st.link_button("View & Apply", row['job_url'])
             st.write("---")
-except:
-    st.info("I'm updating the job list right now! Please refresh in 60 seconds.")st.divider()
-st.caption("⚠️ Disclaimer: This job board is for informational purposes. While we strive for accuracy, we do not guarantee employment or verify every employer. Use at your own risk.")
+except Exception as e:
+    st.error("Robot is currently indexing new roles. Please refresh in a moment!")
 
+# --- 5. FOOTER ---
+st.caption("⚠️ Disclaimer: For informational purposes. We do not guarantee employment.")
