@@ -13,7 +13,7 @@ st.set_page_config(
 # --- 1. YOUR SETTINGS ---
 MY_NICHE = "Remote Marketing" 
 MY_SUBSTACK = "https://nichejobs1.substack.com"  
-MY_STRIPE_VIP = "https://buy.stripe.com/5kQdRa8YgbcN9qvbEn4sE00"
+MY_STRIPE_VIP = "https://buy.stripe.com/cNi14o8Yg94F6ejeQz4sE02"
 
 # --- 2. SIDEBAR ---
 with st.sidebar:
